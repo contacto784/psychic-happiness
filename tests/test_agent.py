@@ -40,9 +40,11 @@ def test_team_researcher_summarizes_all_teams_in_slate():
 
     summaries = {summary.team: summary for summary in report.summaries}
 
-    assert {"Brewers", "Braves", "Blue Jays", "Mariners"}.issubset(summaries)
-    assert "Diamondbacks" not in summaries
+    assert {"Brewers", "Diamondbacks", "Braves", "Mets", "Blue Jays", "Mariners"}.issubset(summaries)
     assert summaries["Brewers"].candidate_count == 1
+    assert summaries["Brewers"].direct_candidate_count == 1
+    assert summaries["Diamondbacks"].candidate_count == 1
+    assert summaries["Diamondbacks"].direct_candidate_count == 0
     assert summaries["Blue Jays"].candidate_count == 1
     assert summaries["Mariners"].candidate_count == 1
     assert summaries["Brewers"].positive_edge_count == 1

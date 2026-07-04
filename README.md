@@ -54,10 +54,10 @@ Only bet what you can afford to lose. This tool is educational and analytical so
 
 ## Deep team research
 
-Use `--team-report` when you want a broader pass across all teams before selecting picks. The report parses common event formats such as `Team A vs Team B` and `Team A @ Team B`, groups every detected team, and summarizes:
+Use `--team-report` when you want a broader pass across all teams before selecting picks. The report parses common event formats such as `Team A vs Team B` and `Team A @ Team B`, groups every detected team on both sides of each matchup, and summarizes:
 
 - events and markets where the team appears;
-- number of candidate markets found;
+- number of candidate markets found plus how many are direct/team-neutral for that team;
 - average modeled win/market probability;
 - average edge against sportsbook break-even probability;
 - positive-edge and strong-edge counts;

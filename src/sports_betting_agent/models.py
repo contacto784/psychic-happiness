@@ -39,6 +39,7 @@ class TeamResearchSummary:
     events: list[str]
     markets: list[str]
     candidate_count: int
+    direct_candidate_count: int
     average_estimated_probability: float
     average_edge: float
     positive_edge_count: int

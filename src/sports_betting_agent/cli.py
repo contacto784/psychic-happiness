@@ -71,6 +71,7 @@ def _print_team_report(candidates: list[BetCandidate]) -> None:
         print(f"   Events: {', '.join(summary.events)}")
         print(f"   Markets: {', '.join(summary.markets)}")
         print(f"   Candidate markets: {summary.candidate_count}")
+        print(f"   Direct/team-neutral markets: {summary.direct_candidate_count}")
         print(f"   Avg model probability: {summary.average_estimated_probability:.1%}")
         print(f"   Avg edge: {summary.average_edge:.1%}")
         print(f"   Positive / strong edges: {summary.positive_edge_count} / {summary.strong_edge_count}")

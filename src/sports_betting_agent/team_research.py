@@ -42,10 +42,7 @@ class TeamResearcher:
         return dict(grouped)
 
     def _teams_for_candidate(self, candidate: BetCandidate) -> list[str]:
-        event_teams = self._parse_event_teams(candidate.event)
-        if candidate.selection in event_teams:
-            return [candidate.selection]
-        return event_teams
+        return self._parse_event_teams(candidate.event)
 
     def _parse_event_teams(self, event: str) -> list[str]:
         for separator in self.config.event_separators:
@@ -54,25 +51,33 @@ class TeamResearcher:
         return [event.strip()] if event.strip() else []
 
     def _summarize(self, team: str, candidates: list[BetCandidate]) -> TeamResearchSummary:
-        probabilities = [candidate.estimated_probability for candidate in candidates]
-        edges = [self._edge(candidate) for candidate in candidates]
+        direct_candidates = [candidate for candidate in candidates if self._is_direct_market(team, candidate)]
+        probabilities = [candidate.estimated_probability for candidate in direct_candidates]
+        edges = [self._edge(candidate) for candidate in direct_candidates]
         positive_edges = sum(edge >= self.config.positive_edge_threshold for edge in edges)
         strong_edges = sum(edge >= self.config.strong_edge_threshold for edge in edges)
         markets = sorted({candidate.market for candidate in candidates})
         events = sorted({candidate.event for candidate in candidates})
-        signals = self._signals(team, candidates, edges, positive_edges, strong_edges)
+        average_probability = round(mean(probabilities), 4) if probabilities else 0.0
+        average_edge = round(mean(edges), 4) if edges else 0.0
+        signals = self._signals(team, candidates, direct_candidates, edges, positive_edges, strong_edges)
 
         return TeamResearchSummary(
             team=team,
             events=events,
             markets=markets,
             candidate_count=len(candidates),
-            average_estimated_probability=round(mean(probabilities), 4),
-            average_edge=round(mean(edges), 4),
+            direct_candidate_count=len(direct_candidates),
+            average_estimated_probability=average_probability,
+            average_edge=average_edge,
             positive_edge_count=positive_edges,
             strong_edge_count=strong_edges,
             signals=signals,
         )
+
+    def _is_direct_market(self, team: str, candidate: BetCandidate) -> bool:
+        event_teams = self._parse_event_teams(candidate.event)
+        return candidate.selection == team or candidate.selection not in event_teams
 
     @staticmethod
     def _edge(candidate: BetCandidate) -> float:
@@ -83,14 +88,17 @@ class TeamResearcher:
         self,
         team: str,
         candidates: list[BetCandidate],
+        direct_candidates: list[BetCandidate],
         edges: list[float],
         positive_edges: int,
         strong_edges: int,
     ) -> list[str]:
-        signals = [
-            f"Found {len(candidates)} candidate market(s) involving {team}.",
-            f"Average modeled edge is {mean(edges):.1%} across available markets.",
-        ]
+        signals = [f"Found {len(candidates)} candidate market(s) involving {team}."]
+        if direct_candidates:
+            signals.append(f"{len(direct_candidates)} market(s) are direct or team-neutral for {team}.")
+            signals.append(f"Average modeled edge is {mean(edges):.1%} across direct/team-neutral markets.")
+        else:
+            signals.append("Team appears as an opponent only; add a direct market before using edge metrics.")
         if strong_edges:
             signals.append(f"{strong_edges} market(s) clear the strong-edge threshold.")
         elif positive_edges:
