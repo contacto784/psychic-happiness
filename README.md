@@ -8,6 +8,7 @@ A responsible, data-driven sports betting assistant that evaluates betting oppor
 - Calculates expected value (EV) for candidate bets.
 - Recommends a conservative Kelly-fraction stake with a configurable maximum-risk cap.
 - Produces a ranked betting card from JSON input.
+- Adds an optional deep team research report that scans every team in the slate, aggregates modeled probability/edge, and prints checklist signals for deeper review.
 - Includes responsible-gambling guardrails and transparent reasoning for every recommendation.
 
 ## Quick start
@@ -22,6 +23,12 @@ Run the CLI with the sample slate:
 
 ```bash
 sports-betting-agent examples/sample_slate.json --bankroll 1000
+```
+
+Run a deeper scan of every team detected in the slate before the betting card:
+
+```bash
+sports-betting-agent examples/deep_team_slate.json --bankroll 1000 --team-report
 ```
 
 ## Input format
@@ -44,3 +51,16 @@ sports-betting-agent examples/sample_slate.json --bankroll 1000
 ## Responsible use
 
 Only bet what you can afford to lose. This tool is educational and analytical software, not a guarantee of profit. If betting stops being fun or feels difficult to control, consider using self-exclusion tools and seeking help from a qualified support organization.
+
+## Deep team research
+
+Use `--team-report` when you want a broader pass across all teams before selecting picks. The report parses common event formats such as `Team A vs Team B` and `Team A @ Team B`, groups every detected team, and summarizes:
+
+- events and markets where the team appears;
+- number of candidate markets found;
+- average modeled win/market probability;
+- average edge against sportsbook break-even probability;
+- positive-edge and strong-edge counts;
+- quick signals to guide deeper injury, lineup, weather, schedule, and price research.
+
+The report is intentionally offline and only uses your supplied slate, so verify live odds, lineups, injuries, and weather before placing any wager.

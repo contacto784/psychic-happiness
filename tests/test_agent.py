@@ -1,4 +1,4 @@
-from sports_betting_agent import BetCandidate, BettingAgent, BettingAgentConfig
+from sports_betting_agent import BetCandidate, BettingAgent, BettingAgentConfig, TeamResearcher
 from sports_betting_agent.odds import implied_probability, to_decimal_odds
 
 
@@ -27,3 +27,22 @@ def test_agent_recommends_positive_edge_and_passes_negative_edge():
     assert recommendations[0].stake > 0
     assert recommendations[1].confidence == "pass"
     assert recommendations[1].stake == 0
+
+
+def test_team_researcher_summarizes_all_teams_in_slate():
+    report = TeamResearcher().research(
+        [
+            BetCandidate("Brewers vs Diamondbacks", "Moneyline", "Brewers", "-135", 0.61),
+            BetCandidate("Braves vs Mets", "Run Line -1.5", "Braves", "+125", 0.49),
+            BetCandidate("Blue Jays @ Mariners", "Total Under 8", "Under", "-110", 0.54),
+        ]
+    )
+
+    summaries = {summary.team: summary for summary in report.summaries}
+
+    assert {"Brewers", "Braves", "Blue Jays", "Mariners"}.issubset(summaries)
+    assert "Diamondbacks" not in summaries
+    assert summaries["Brewers"].candidate_count == 1
+    assert summaries["Blue Jays"].candidate_count == 1
+    assert summaries["Mariners"].candidate_count == 1
+    assert summaries["Brewers"].positive_edge_count == 1

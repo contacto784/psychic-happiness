@@ -29,3 +29,25 @@ class BetRecommendation:
     stake: float
     confidence: str
     rationale: str
+
+
+@dataclass(frozen=True)
+class TeamResearchSummary:
+    """Aggregated research view for one team across a slate."""
+
+    team: str
+    events: list[str]
+    markets: list[str]
+    candidate_count: int
+    average_estimated_probability: float
+    average_edge: float
+    positive_edge_count: int
+    strong_edge_count: int
+    signals: list[str]
+
+
+@dataclass(frozen=True)
+class TeamResearchReport:
+    """Research report containing every team discovered in a slate."""
+
+    summaries: list[TeamResearchSummary]
