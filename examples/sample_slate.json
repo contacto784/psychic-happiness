@@ -1,0 +1,26 @@
+[
+  {
+    "event": "Lions vs Bears",
+    "market": "Moneyline",
+    "selection": "Lions",
+    "odds": "+140",
+    "estimated_probability": 0.45,
+    "sportsbook": "ExampleBook"
+  },
+  {
+    "event": "Sharks vs Kings",
+    "market": "Spread -2.5",
+    "selection": "Sharks",
+    "odds": "1.91",
+    "estimated_probability": 0.51,
+    "sportsbook": "ExampleBook"
+  },
+  {
+    "event": "Hawks vs Owls",
+    "market": "Total Over 218.5",
+    "selection": "Over",
+    "odds": "10/11",
+    "estimated_probability": 0.54,
+    "sportsbook": "ExampleBook"
+  }
+]

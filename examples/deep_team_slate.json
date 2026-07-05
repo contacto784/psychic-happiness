@@ -1,0 +1,50 @@
+[
+  {
+    "event": "Brewers vs Diamondbacks",
+    "market": "Moneyline",
+    "selection": "Brewers",
+    "odds": "-135",
+    "estimated_probability": 0.61,
+    "sportsbook": "ExampleBook"
+  },
+  {
+    "event": "Braves vs Mets",
+    "market": "Run Line -1.5",
+    "selection": "Braves",
+    "odds": "+125",
+    "estimated_probability": 0.49,
+    "sportsbook": "ExampleBook"
+  },
+  {
+    "event": "Phillies vs Royals",
+    "market": "Moneyline",
+    "selection": "Phillies",
+    "odds": "-120",
+    "estimated_probability": 0.57,
+    "sportsbook": "ExampleBook"
+  },
+  {
+    "event": "Dodgers vs Padres",
+    "market": "Moneyline",
+    "selection": "Dodgers",
+    "odds": "-160",
+    "estimated_probability": 0.66,
+    "sportsbook": "ExampleBook"
+  },
+  {
+    "event": "Cubs vs Cardinals",
+    "market": "Moneyline",
+    "selection": "Cubs",
+    "odds": "+105",
+    "estimated_probability": 0.50,
+    "sportsbook": "ExampleBook"
+  },
+  {
+    "event": "Paraguay vs France",
+    "market": "To Qualify",
+    "selection": "France",
+    "odds": "-220",
+    "estimated_probability": 0.73,
+    "sportsbook": "ExampleBook"
+  }
+]
